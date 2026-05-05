@@ -10,7 +10,7 @@ const projects = [
     number: "01",
     title: "Dolearnn",
     description:
-      "A modern learning platform designed to make digital education more accessible, structured, and engaging. Built with a product mindset around clarity, smooth learning flows, and scalable front-end architecture.",
+    "DoLearnn is an edtech platform that connects students with vetted teachers for personalized one on one online learning. It uses a hands on matching approach to pair each learner with the right teacher based on their needs, while providing structured learning and clear progress tracking.",
     tags: ["Next.js", "TypeScript", "Tailwind", "EdTech", "UX"],
     stats: [
       { value: "Live", label: "Platform Status" },
@@ -20,13 +20,14 @@ const projects = [
     category: "Learning Platform",
     stage: "Live Product",
     tone: "Clarity-led learning experience",
+    liveUrl: "https://dolearnn.com/",
   },
   {
     number: "02",
     title: "Eventpadi",
     description:
       "A high-scale event management platform processing real money and real people. Built to handle 70K+ ticket buyers and 500+ events while maintaining sub-second load times and rock-solid payment flows.",
-    tags: ["React", "TypeScript", "Node.js", "REST API", "CI/CD"],
+    tags: ["React", "TypeScript",  "CHAKRA UI", "CI/CD"],
     stats: [
       { value: "70K+", label: "Ticket Buyers" },
       { value: "$40K+", label: "Revenue Processed" },
@@ -35,6 +36,7 @@ const projects = [
     category: "Event Platform",
     stage: "High-volume ops",
     tone: "Built for pressure and trust",
+    liveUrl: "https://eventpadi.com/",
   },
   {
     number: "03",
@@ -50,13 +52,14 @@ const projects = [
     category: "EdTech",
     stage: "Platform architecture",
     tone: "Complex flows made usable",
+    liveUrl: "#",
   },
   {
     number: "04",
     title: "Primal Journals",
     description:
       "An academic content management system built for a publishing house, featuring optimized SEO architecture, content discovery flows, and performance engineering that drove measurable traffic growth.",
-    tags: ["Next.js", "SEO", "Performance", "CMS", "TypeScript"],
+    tags: ["Reactjs", "SEO", "Performance", "CMS", "TypeScript"],
     stats: [
       { value: "50%", label: "Traffic Growth" },
       { value: "A+", label: "Lighthouse Score" },
@@ -65,6 +68,23 @@ const projects = [
     category: "Academic CMS",
     stage: "Content performance",
     tone: "Editorial system with reach",
+    liveUrl: "https://primaljournals.org/",
+  },
+  {
+    number: "05",
+    title: "Devupshot",
+    description:
+      "A full-featured learning management system that supports course creation, instructor dashboards, and platform-level configuration. It enables admins and instructors to manage courses, track learning activities, and deliver structured online education through a scalable, dashboard-driven system.",
+    tags: ["React", "Chakra UI", "Node.js", "LMS", "Dashboards"],
+    stats: [
+      { value: "LMS", label: "Platform Type" },
+      { value: "Multi", label: "Role System" },
+      { value: "Full", label: "Course Lifecycle" },
+    ],
+    category: "Learning Platform",
+    stage: "Dashboard-driven LMS",
+    tone: "Structured learning at scale",
+    liveUrl: "https://educrat-rho.vercel.app/",
   },
 ];
 
@@ -238,9 +258,32 @@ function ProjectCard({
               </span>
             ))}
           </div>
+
+          <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-line/70 pt-6">
+            <span className="font-dm text-[11px] uppercase tracking-[0.22em] text-fg5">
+              Live Site
+            </span>
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Visit ${project.title} live site`}
+              className="group/link inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-2 font-dm text-xs uppercase tracking-[0.18em] text-accent-fg transition-all duration-200 hover:border-accent hover:bg-accent hover:text-black"
+            >
+              Visit {project.title}
+              <FiExternalLink
+                className="transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+                size={14}
+              />
+            </a>
+          </div>
         </div>
 
-        <motion.div
+        <motion.a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Visit ${project.title} live site`}
           animate={hovered ? { x: 6, y: -6 } : { x: 0, y: 0 }}
           transition={{ duration: 0.22 }}
           className="hidden lg:flex"
@@ -251,7 +294,7 @@ function ProjectCard({
               size={18}
             />
           </div>
-        </motion.div>
+        </motion.a>
       </div>
     </motion.article>
   );

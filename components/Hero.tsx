@@ -526,7 +526,7 @@ export default function Hero() {
               transition={{ delay: 0.95, duration: 1.2 }}
               className="absolute left-6 top-[26rem] hidden h-24 w-24 rounded-full bg-accent/10 blur-3xl lg:block"
             />
-            <h1 className="font-syne text-[13.2vw] font-extrabold leading-[0.92] tracking-[-0.045em] sm:text-[12.5vw] sm:tracking-tight md:text-[10vw] lg:text-[6.9vw] xl:text-[7.3vw]">
+            <h1 className="font-syne text-3xl font-extrabold leading-[1] tracking-tight sm:text-[12.5vw] sm:leading-[0.92] sm:tracking-tight md:text-[10vw] lg:text-[6.9vw] xl:text-[7.3vw]">
               <RevealLetters text="Peter" className="block text-fg" baseDelay={0.45} per={0.045} />
               <span className="-mt-1 block leading-[0.92] whitespace-nowrap">
                 <RevealLetters
@@ -651,7 +651,7 @@ export default function Hero() {
             <div className="flex items-center gap-5 font-dm text-xs">
               <Stat>
                 <span className="font-syne text-base font-bold text-fg">
-                  <CountUp to={4} suffix="+" duration={1.4} />
+                  <CountUp to={5} suffix="+" duration={1.4} />
                 </span>
                 <span className="text-[10px] uppercase tracking-wider text-fg4">Years</span>
               </Stat>
@@ -718,8 +718,7 @@ export default function Hero() {
                     Dolearnn
                   </h3>
                   <p className="font-dm text-sm leading-relaxed text-fg4">
-                    A modern learning platform focused on making digital education more accessible, structured, and engaging.
-                  </p>
+                    DoLearnn is an edtech platform that matches students with vetted teachers for personalized one-on-one learning, focusing on quality education and measurable progress.                  </p>
                 </div>
 
                 <div className="rounded-2xl border border-line/80 bg-surface/70 p-4">
@@ -862,18 +861,16 @@ function CornerBracket({
         animate={{ scaleX: 1 }}
         transition={{ delay: delay + 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         style={{ originX: isLeft ? 0 : 1 }}
-        className={`absolute left-0 right-0 h-px bg-accent/40 ${
-          isTop ? "top-0" : "bottom-0"
-        }`}
+        className={`absolute left-0 right-0 h-px bg-accent/40 ${isTop ? "top-0" : "bottom-0"
+          }`}
       />
       <motion.span
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 1 }}
         transition={{ delay: delay + 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         style={{ originY: isTop ? 0 : 1 }}
-        className={`absolute bottom-0 top-0 w-px bg-accent/40 ${
-          isLeft ? "left-0" : "right-0"
-        }`}
+        className={`absolute bottom-0 top-0 w-px bg-accent/40 ${isLeft ? "left-0" : "right-0"
+          }`}
       />
     </motion.span>
   );

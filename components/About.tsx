@@ -138,7 +138,7 @@ export default function About() {
                   <p className="mb-2 font-dm text-[11px] uppercase tracking-[0.24em] text-fg5">
                     Impact
                   </p>
-                  <p className="mb-3 font-syne text-4xl font-extrabold text-accent-fg md:text-5xl">
+                  <p className="mb-3 whitespace-nowrap font-syne text-2xl  font-extrabold tracking-tight text-accent-fg md:text-5xl md:tracking-normal">
                     <CountUp
                       to={stat.to}
                       prefix={stat.prefix}
