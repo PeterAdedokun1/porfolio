@@ -195,9 +195,23 @@ function ProjectCard({
   index: number;
 }) {
   const [hovered, setHovered] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const spotlight = useMotionTemplate`radial-gradient(420px circle at ${mouseX}px ${mouseY}px, rgba(200,255,0,0.14), transparent 72%)`;
+
+  // Live screenshot via thum.io (no setup needed). To use a curated image
+  // instead, drop a file in /public/projects and set `preview` to e.g.
+  // `/projects/nailmaestro.png`.
+  const hasLiveSite = Boolean(project.liveUrl && project.liveUrl !== "#");
+  const preview = hasLiveSite
+    ? `https://image.thum.io/get/width/1200/crop/675/noanimate/${project.liveUrl}`
+    : null;
+  const displayUrl = hasLiveSite
+    ? project.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")
+    : "Private project";
+  const showImage = Boolean(preview) && !imgError;
+  const imageOnLeft = index % 2 === 1;
 
   return (
     <motion.article
@@ -230,20 +244,21 @@ function ProjectCard({
         className="absolute inset-x-10 top-24 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent"
       />
 
-      <div className="relative z-10 grid gap-8 lg:grid-cols-[auto,1fr,auto] lg:items-start">
-        <div className="flex items-center gap-4 lg:block">
-          <span className="block font-syne text-6xl font-extrabold leading-none text-line-strong transition-colors duration-300 group-hover:text-accent/40 md:text-7xl">
-            {project.number}
-          </span>
-          <div className="lg:hidden">
-            <p className="font-dm text-[11px] uppercase tracking-[0.22em] text-fg5">
-              {project.stage}
-            </p>
-            <p className="mt-1 font-dm text-sm text-fg3">{project.tone}</p>
+      <div className="relative z-10 grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
+        {/* Text column */}
+        <div className={imageOnLeft ? "lg:order-2" : "lg:order-1"}>
+          <div className="mb-5 flex items-center gap-4">
+            <span className="font-syne text-4xl font-extrabold leading-none text-line-strong transition-colors duration-300 group-hover:text-accent/40 md:text-5xl">
+              {project.number}
+            </span>
+            <div>
+              <p className="font-dm text-[11px] uppercase tracking-[0.22em] text-fg5">
+                {project.stage}
+              </p>
+              <p className="mt-0.5 font-dm text-sm text-fg3">{project.tone}</p>
+            </div>
           </div>
-        </div>
 
-        <div>
           <div className="mb-4 flex flex-wrap items-center gap-3">
             <h3 className="font-syne text-3xl font-bold text-fg transition-colors duration-300 group-hover:text-accent-fg md:text-4xl">
               {project.title}
@@ -253,18 +268,11 @@ function ProjectCard({
             </span>
           </div>
 
-          <div className="mb-6 hidden items-center gap-4 lg:flex">
-            <span className="rounded-full border border-accent/20 bg-accent/10 px-3 py-1.5 font-dm text-[10px] uppercase tracking-[0.22em] text-accent-fg">
-              {project.stage}
-            </span>
-            <span className="font-dm text-sm text-fg4">{project.tone}</span>
-          </div>
-
-          <p className="mb-8 max-w-3xl font-dm text-base leading-relaxed text-fg3 md:text-lg">
+          <p className="mb-8 font-dm text-base leading-relaxed text-fg3 md:text-lg">
             {project.description}
           </p>
 
-          <div className="mb-8 grid gap-4 md:grid-cols-3">
+          <div className="mb-8 grid gap-3 sm:grid-cols-3">
             {project.stats.map((stat, statIndex) => (
               <motion.div
                 key={stat.label}
@@ -280,7 +288,7 @@ function ProjectCard({
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="mb-8 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
               <span
                 key={tag}
@@ -291,43 +299,108 @@ function ProjectCard({
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-line/70 pt-6">
+          <div className="flex flex-wrap items-center gap-3 border-t border-line/70 pt-6">
             <span className="font-dm text-[11px] uppercase tracking-[0.22em] text-fg5">
-              Live Site
+              {hasLiveSite ? "Live Site" : "Status"}
             </span>
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Visit ${project.title} live site`}
-              className="group/link inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-2 font-dm text-xs uppercase tracking-[0.18em] text-accent-fg transition-all duration-200 hover:border-accent hover:bg-accent hover:text-black"
-            >
-              Visit {project.title}
-              <FiExternalLink
-                className="transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
-                size={14}
-              />
-            </a>
+            {hasLiveSite ? (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${project.title} live site`}
+                className="group/link inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-2 font-dm text-xs uppercase tracking-[0.18em] text-accent-fg transition-all duration-200 hover:border-accent hover:bg-accent hover:text-black"
+              >
+                Visit {project.title}
+                <FiExternalLink
+                  className="transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+                  size={14}
+                />
+              </a>
+            ) : (
+              <span className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 font-dm text-xs uppercase tracking-[0.18em] text-fg4">
+                Private / NDA
+              </span>
+            )}
           </div>
         </div>
 
-        <motion.a
-          href={project.liveUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Visit ${project.title} live site`}
-          animate={hovered ? { x: 6, y: -6 } : { x: 0, y: 0 }}
-          transition={{ duration: 0.22 }}
-          className="hidden lg:flex"
+        {/* Preview column */}
+        <PreviewFrame
+          as={hasLiveSite ? "a" : "div"}
+          href={hasLiveSite ? project.liveUrl : undefined}
+          ariaLabel={`Visit ${project.title} live site`}
+          className={imageOnLeft ? "lg:order-1" : "lg:order-2"}
         >
-          <div className="flex h-14 w-14 items-center justify-center rounded-full border border-line bg-surface/80 transition-all duration-300 group-hover:border-accent group-hover:bg-accent">
-            <FiArrowRight
-              className="text-fg4 transition-colors duration-300 group-hover:text-black"
-              size={18}
-            />
+          <div className="flex items-center gap-2 border-b border-line/70 bg-panel/80 px-4 py-3">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/70" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/70" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/70" />
+            <span className="ml-3 truncate font-dm text-[10px] tracking-wide text-fg5">
+              {displayUrl}
+            </span>
           </div>
-        </motion.a>
+          <div className="relative aspect-[16/10] w-full overflow-hidden bg-panel">
+            {showImage ? (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={preview as string}
+                  alt={`Screenshot of the ${project.title} website`}
+                  loading="lazy"
+                  onError={() => setImgError(true)}
+                  className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+                />
+                <span className="pointer-events-none absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface/90 opacity-0 shadow-sm transition-opacity duration-300 group-hover:opacity-100">
+                  <FiArrowRight className="text-accent-fg" size={16} />
+                </span>
+              </>
+            ) : (
+              <div className="flex h-full w-full flex-col items-center justify-center gap-2">
+                <span className="font-syne text-6xl font-extrabold text-line-strong">
+                  {project.number}
+                </span>
+                <span className="font-dm text-[11px] uppercase tracking-[0.22em] text-fg5">
+                  {hasLiveSite ? "Preview unavailable" : "Private build"}
+                </span>
+              </div>
+            )}
+          </div>
+        </PreviewFrame>
       </div>
     </motion.article>
   );
+}
+
+function PreviewFrame({
+  as,
+  href,
+  ariaLabel,
+  className,
+  children,
+}: {
+  as: "a" | "div";
+  href?: string;
+  ariaLabel: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const shared =
+    "relative block overflow-hidden rounded-[1.5rem] border border-line shadow-[0_20px_60px_rgba(0,0,0,0.06)] transition-all duration-300 group-hover:border-accent/40";
+
+  if (as === "a") {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={ariaLabel}
+        className={`${shared} ${className ?? ""}`}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return <div className={`${shared} ${className ?? ""}`}>{children}</div>;
 }

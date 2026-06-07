@@ -57,8 +57,10 @@ export default function Contact() {
     email: "",
     subject: "",
     message: "",
+    company: "", // honeypot — must stay empty
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -69,10 +71,29 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setStatus("sent");
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setTimeout(() => setStatus("idle"), 4000);
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || "Could not send message.");
+      }
+
+      setStatus("sent");
+      setFormData({ name: "", email: "", subject: "", message: "", company: "" });
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch (err) {
+      setErrorMessage(
+        err instanceof Error ? err.message : "Something went wrong."
+      );
+      setStatus("error");
+    }
   };
 
   return (
@@ -97,7 +118,7 @@ export default function Contact() {
 
             <ScrollReveal delay={0.08}>
               <h2 className="max-w-xl font-syne text-4xl font-extrabold leading-tight text-fg md:text-5xl">
-                Looking for a frontend engineer who can
+                Looking for a product engineer who can
                 <span className="text-accent-fg"> make your product feel world-class</span>?
               </h2>
             </ScrollReveal>
@@ -253,6 +274,18 @@ export default function Contact() {
                   />
                 </div>
 
+                {/* Honeypot: hidden from humans, catches spam bots */}
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute -left-[9999px] h-0 w-0 opacity-0"
+                />
+
                 <motion.button
                   type="submit"
                   disabled={status === "sending" || status === "sent"}
@@ -281,7 +314,8 @@ export default function Contact() {
 
                 {status === "error" && (
                   <p className="text-center font-dm text-sm text-red-500">
-                    Something went wrong. Please try again or email directly.
+                    {errorMessage ||
+                      "Something went wrong. Please try again or email directly."}
                   </p>
                 )}
               </div>

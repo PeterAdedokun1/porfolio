@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
 import dynamic from "next/dynamic";
+import { Analytics } from "@vercel/analytics/react";
 
 const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
   ssr: false,
@@ -161,6 +162,7 @@ export default function RootLayout({
       <body className={`${syne.variable} ${dmSans.variable} antialiased`}>
         <CustomCursor />
         {children}
+        <Analytics />
       </body>
     </html>
   );

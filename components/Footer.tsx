@@ -19,7 +19,7 @@ export default function Footer() {
                   Peter Adedokun
                 </span>
                 <span className="block font-dm text-[10px] uppercase tracking-[0.24em] text-fg5">
-                  Frontend Engineer
+                  Product Engineer
                 </span>
               </span>
             </a>

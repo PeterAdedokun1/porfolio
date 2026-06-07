@@ -21,6 +21,7 @@ import {
 import {
   FiArrowDown,
   FiArrowUpRight,
+  FiDownload,
   FiGithub,
   FiLinkedin,
   FiMail,
@@ -599,6 +600,17 @@ export default function Hero() {
               >
                 Get In Touch
                 <FiArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.4}>
+              <a
+                href="/Peter-Adedokun-CV.pdf"
+                download
+                data-cursor-hover
+                className="group flex items-center gap-2 rounded-full border border-line px-7 py-3.5 font-dm font-medium text-fg3 transition-all duration-200 hover:border-accent hover:bg-accent/5 hover:text-accent-fg"
+              >
+                Download CV
+                <FiDownload className="transition-transform group-hover:translate-y-0.5" />
               </a>
             </Magnetic>
           </motion.div>
