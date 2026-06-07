@@ -28,10 +28,10 @@ import {
 import CountUp from "./CountUp";
 
 const titles = [
+  "Product Engineer",
   "Frontend Engineer",
   "React Specialist",
-  "TypeScript Expert",
-  "System Architect",
+  "Product-Minded Builder",
 ];
 
 const marqueeStack = [
@@ -48,9 +48,9 @@ const marqueeStack = [
 ];
 
 const orbitBadges = [
-  { label: "Motion-first UI", x: "8%", y: "24%", delay: 1.1 },
+  { label: "Product thinking", x: "8%", y: "24%", delay: 1.1 },
   { label: "Fast shipping", x: "74%", y: "20%", delay: 1.35 },
-  { label: "System thinking", x: "70%", y: "72%", delay: 1.55 },
+  { label: "Motion-first UI", x: "70%", y: "72%", delay: 1.55 },
 ];
 
 function useLagosTime() {
@@ -571,8 +571,8 @@ export default function Hero() {
             className="mb-10 max-w-xl font-dm text-base leading-relaxed text-fg3 md:text-lg"
           >
             I build <span className="font-medium text-fg">fast, scalable, and beautiful</span>{" "}
-            web applications. From pixel-perfect interfaces to robust system
-            architecture, engineered out of Lagos and shipped to the world.
+            products. From the product decisions to pixel-perfect interfaces and
+            the systems behind them, engineered out of Lagos and shipped to the world.
           </motion.p>
 
           <motion.div

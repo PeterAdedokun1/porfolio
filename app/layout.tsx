@@ -22,9 +22,9 @@ const dmSans = DM_Sans({
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000";
 
-const siteTitle = "Peter Adedokun | Frontend Engineer";
+const siteTitle = "Peter Adedokun | Product & Frontend Engineer";
 const siteDescription =
-  "Frontend engineer building premium React, Next.js, and TypeScript products for startups, agencies, and global clients.";
+  "Product-focused frontend engineer building premium React, Next.js, and TypeScript products for startups, agencies, and global clients.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -36,11 +36,13 @@ export const metadata: Metadata = {
   applicationName: "Peter Adedokun Portfolio",
   keywords: [
     "Peter Adedokun",
+    "Product Engineer",
     "Frontend Engineer",
     "Frontend Developer",
     "React",
     "TypeScript",
     "Next.js",
+    "Lagos Product Engineer",
     "Lagos Frontend Engineer",
     "Remote Frontend Engineer",
     "Freelance React Developer",
@@ -76,7 +78,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Peter Adedokun frontend engineer portfolio",
+        alt: "Peter Adedokun product and frontend engineer portfolio",
       },
     ],
   },
@@ -108,7 +110,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Peter Adedokun",
-    jobTitle: "Frontend Engineer",
+    jobTitle: "Product & Frontend Engineer",
     description: siteDescription,
     url: siteUrl,
     email: "mailto:peteradedokun167@gmail.com",
@@ -127,6 +129,7 @@ export default function RootLayout({
       "React",
       "Next.js",
       "TypeScript",
+      "Product Engineering",
       "Frontend Engineering",
       "UI Development",
       "Web Performance",

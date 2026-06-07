@@ -86,6 +86,38 @@ const projects = [
     tone: "Structured learning at scale",
     liveUrl: "https://educrat-rho.vercel.app/",
   },
+  {
+    number: "06",
+    title: "Nail Maestro",
+    description:
+      "A luxury brand site for a premium nail artistry studio that treats nail design as culture, identity, and creative direction. Built around an immersive portfolio with a full-screen gallery viewer, tiered service storytelling, and direct WhatsApp and Instagram booking flows that turn browsing into bookings.",
+    tags: ["Next.js", "TypeScript", "Tailwind", "Framer Motion", "Brand"],
+    stats: [
+      { value: "Live", label: "Platform Status" },
+      { value: "Luxury", label: "Brand Tier" },
+      { value: "Direct", label: "Booking Flow" },
+    ],
+    category: "Luxury Brand",
+    stage: "Live Product",
+    tone: "Editorial brand, built to convert",
+    liveUrl: "https://www.nailmaestro.com/",
+  },
+  {
+    number: "07",
+    title: "Kairolexx",
+    description:
+      "A marketing agency site for a team that pairs strategy with hands-on execution across content, ads, email, SEO, and campaign delivery. Designed to communicate measurable momentum over vanity metrics, with clear service framing, case-study proof, and frictionless consultation booking via WhatsApp and email.",
+    tags: ["Next.js", "TypeScript", "Tailwind", "Marketing", "Conversion"],
+    stats: [
+      { value: "Live", label: "Platform Status" },
+      { value: "Multi", label: "Channel Support" },
+      { value: "20min", label: "Free Strategy Call" },
+    ],
+    category: "Agency Site",
+    stage: "Live Product",
+    tone: "Strategy that ships, not just slides",
+    liveUrl: "https://kairolexx.vercel.app/",
+  },
 ];
 
 export default function Projects() {

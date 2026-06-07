@@ -63,7 +63,7 @@ export default function About() {
 
             <ScrollReveal delay={0.05}>
               <h2 className="max-w-4xl font-syne text-4xl font-extrabold leading-[1.02] text-fg md:text-6xl">
-                I design and build digital products that feel
+                I&apos;m a product engineer who builds interfaces that feel
                 <span className="text-accent-fg"> premium, fast, and trustworthy</span>.
               </h2>
             </ScrollReveal>
@@ -72,10 +72,10 @@ export default function About() {
               <div className="grid gap-6 rounded-[2rem] border border-line bg-gradient-to-br from-panel to-surface p-8 shadow-[0_24px_70px_rgba(0,0,0,0.04)] md:grid-cols-[1.2fr,0.8fr]">
                 <div className="space-y-5">
                   <p className="font-dm text-lg leading-relaxed text-fg3">
-                    I am a frontend engineer from <span className="text-fg">Lagos, Nigeria</span> focused on helping startups and growing teams ship polished web experiences. My strongest tools are <span className="text-accent-fg">React</span>, <span className="text-accent-fg">TypeScript</span>, and <span className="text-accent-fg">Next.js</span>, but the bigger value I bring is turning product ideas into interfaces users instantly trust.
+                    I am a product-focused frontend engineer from <span className="text-fg">Lagos, Nigeria</span> who helps startups and growing teams turn ideas into products people actually use. My strongest tools are <span className="text-accent-fg">React</span>, <span className="text-accent-fg">TypeScript</span>, and <span className="text-accent-fg">Next.js</span>, but the bigger value I bring is owning features end to end, from the product decision to the interface users instantly trust.
                   </p>
                   <p className="font-dm text-lg leading-relaxed text-fg3">
-                    My work spans EdTech, event platforms, and publishing systems. I care about the details that matter to international clients too: responsiveness, clarity, accessibility, performance, and delivery that does not need constant follow-up.
+                    My work spans EdTech, event platforms, and publishing systems. I think in user outcomes, not just tickets, and care about the details that matter to international clients too: responsiveness, clarity, accessibility, performance, and delivery that does not need constant follow-up.
                   </p>
                 </div>
 
