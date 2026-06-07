@@ -1,10 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 // Decorative, animated page backdrop + the one-time load fade.
 // Split out of the page so the page itself can stay a server component.
 export default function PageBackground() {
+  const reduced = useReducedMotion();
+
   return (
     <>
       <motion.div
@@ -18,21 +20,21 @@ export default function PageBackground() {
       <motion.div
         aria-hidden
         className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[32rem] bg-[radial-gradient(circle_at_top,rgba(200,255,0,0.12),transparent_62%)]"
-        animate={{ opacity: [0.45, 0.7, 0.45], scale: [1, 1.04, 1] }}
+        animate={reduced ? undefined : { opacity: [0.45, 0.7, 0.45], scale: [1, 1.04, 1] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <motion.div
         aria-hidden
         className="pointer-events-none fixed -left-32 top-1/4 z-0 h-[28rem] w-[28rem] rounded-full border border-accent/10"
-        animate={{ y: [0, -30, 0], rotate: [0, 12, 0] }}
+        animate={reduced ? undefined : { y: [0, -30, 0], rotate: [0, 12, 0] }}
         transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <motion.div
         aria-hidden
         className="pointer-events-none fixed -right-40 bottom-10 z-0 h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(200,255,0,0.10),transparent_65%)] blur-3xl"
-        animate={{ scale: [1, 1.08, 1], x: [0, -18, 0] }}
+        animate={reduced ? undefined : { scale: [1, 1.08, 1], x: [0, -18, 0] }}
         transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
       />
     </>

@@ -21,6 +21,7 @@ const projects = [
     stage: "Live Product",
     tone: "Clarity-led learning experience",
     liveUrl: "https://dolearnn.com/",
+    image: "/dolearnn.png",
   },
   {
     number: "02",
@@ -37,6 +38,7 @@ const projects = [
     stage: "High-volume ops",
     tone: "Built for pressure and trust",
     liveUrl: "https://eventpadi.com/",
+    image: "/eventpadi.png",
   },
   {
     number: "03",
@@ -53,6 +55,7 @@ const projects = [
     stage: "Platform architecture",
     tone: "Complex flows made usable",
     liveUrl: "#",
+    image: "",
   },
   {
     number: "04",
@@ -69,6 +72,7 @@ const projects = [
     stage: "Content performance",
     tone: "Editorial system with reach",
     liveUrl: "https://primaljournals.org/",
+    image: "/primalJournal.png",
   },
   {
     number: "05",
@@ -85,6 +89,7 @@ const projects = [
     stage: "Dashboard-driven LMS",
     tone: "Structured learning at scale",
     liveUrl: "https://educrat-rho.vercel.app/",
+    image: "/devupshot.png",
   },
   {
     number: "06",
@@ -101,6 +106,7 @@ const projects = [
     stage: "Live Product",
     tone: "Editorial brand, built to convert",
     liveUrl: "https://www.nailmaestro.com/",
+    image: "/nailmaestro.png",
   },
   {
     number: "07",
@@ -117,6 +123,7 @@ const projects = [
     stage: "Live Product",
     tone: "Strategy that ships, not just slides",
     liveUrl: "https://kairolexx.vercel.app/",
+    image: "/kairalexx.png",
   },
 ];
 
@@ -200,11 +207,12 @@ function ProjectCard({
   const mouseY = useMotionValue(0);
   const spotlight = useMotionTemplate`radial-gradient(420px circle at ${mouseX}px ${mouseY}px, rgba(200,255,0,0.14), transparent 72%)`;
 
-  // Live screenshot via thum.io (no setup needed). To use a curated image
-  // instead, drop a file in /public/projects and set `preview` to e.g.
-  // `/projects/nailmaestro.png`.
+  // Prefer a curated local screenshot (in /public); fall back to a live
+  // thum.io capture if a project has no local image but does have a live URL.
   const hasLiveSite = Boolean(project.liveUrl && project.liveUrl !== "#");
-  const preview = hasLiveSite
+  const preview = project.image
+    ? project.image
+    : hasLiveSite
     ? `https://image.thum.io/get/width/1200/crop/675/noanimate/${project.liveUrl}`
     : null;
   const displayUrl = hasLiveSite
