@@ -35,8 +35,11 @@ const config: Config = {
         },
       },
       fontFamily: {
-        syne: ["var(--font-syne)", "sans-serif"],
-        dm: ["var(--font-dm-sans)", "sans-serif"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        // Legacy aliases — both now resolve to Inter so existing
+        // font-syne / font-dm class usage keeps working.
+        syne: ["var(--font-inter)", "system-ui", "sans-serif"],
+        dm: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       animation: {
         "cursor-blink": "blink 1s step-end infinite",

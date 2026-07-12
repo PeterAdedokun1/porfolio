@@ -1,23 +1,12 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import dynamic from "next/dynamic";
 import { Analytics } from "@vercel/analytics/react";
 
-const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
-  ssr: false,
-});
-
-const syne = Syne({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-syne",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
-  weight: ["300", "400", "500", "600"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 const siteUrl =
@@ -159,8 +148,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className={`${syne.variable} ${dmSans.variable} antialiased`}>
-        <CustomCursor />
+      <body className={`${inter.variable} antialiased`}>
         {children}
         <Analytics />
       </body>
