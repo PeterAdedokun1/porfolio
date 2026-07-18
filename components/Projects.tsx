@@ -38,7 +38,7 @@ const projects = [
     stage: "High-volume ops",
     tone: "Built for pressure and trust",
     liveUrl: "https://eventpadi.com/",
-    image: "/eventpadi.png",
+    image: "/eventpadi.jpeg",
   },
   {
     number: "03",
