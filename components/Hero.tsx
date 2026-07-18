@@ -4,7 +4,6 @@ import {
   AnimatePresence,
   motion,
   useInView,
-  useMotionTemplate,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -14,7 +13,6 @@ import {
 import {
   MouseEvent as ReactMouseEvent,
   ReactNode,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -94,72 +92,6 @@ function useHasHover() {
   }, []);
 
   return hasHover;
-}
-
-const SCRAMBLE_CHARS = "!<>-_\\/[]{}=+*^?#$@%&";
-
-function Scramble({ text, speed = 35 }: { text: string; speed?: number }) {
-  const [output, setOutput] = useState(text);
-  const previousRef = useRef("");
-  const reduced = useReducedMotion();
-
-  useEffect(() => {
-    if (reduced) {
-      setOutput(text);
-      previousRef.current = text;
-      return;
-    }
-
-    const previous = previousRef.current;
-    previousRef.current = text;
-    const length = Math.max(previous.length, text.length);
-    const queue = Array.from({ length }, (_, index) => ({
-      from: previous[index] || "",
-      to: text[index] || "",
-      start: Math.floor(Math.random() * 18),
-      end: Math.floor(Math.random() * 24) + 18,
-      char: previous[index] || "",
-    }));
-
-    let frame = 0;
-    let timer: ReturnType<typeof setInterval>;
-
-    const step = () => {
-      let next = "";
-      let done = 0;
-
-      for (const item of queue) {
-        if (frame >= item.end) {
-          next += item.to;
-          done += 1;
-          continue;
-        }
-
-        if (frame >= item.start) {
-          if (!item.char || Math.random() < 0.3) {
-            item.char =
-              SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-          }
-          next += item.char;
-          continue;
-        }
-
-        next += item.from;
-      }
-
-      setOutput(next);
-      frame += 1;
-
-      if (done === queue.length) {
-        clearInterval(timer);
-      }
-    };
-
-    timer = setInterval(step, speed);
-    return () => clearInterval(timer);
-  }, [reduced, speed, text]);
-
-  return <span>{output || "\u00A0"}</span>;
 }
 
 function Magnetic({
@@ -295,62 +227,13 @@ function RevealLetters({
 }
 
 export default function Hero() {
-  const [titleIndex, setTitleIndex] = useState(0);
   const lagosTime = useLagosTime();
   const reduced = useReducedMotion();
-  const hasHover = useHasHover();
   const sectionRef = useRef<HTMLElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   // Pause the marquee's infinite loop once it scrolls out of view to avoid
   // running an animation frame loop the user can't see.
   const marqueeInView = useInView(marqueeRef);
-  // Same idea for the hero's decorative background loops.
-  const heroInView = useInView(sectionRef);
-  const bgActive = !reduced && heroInView;
-
-  useEffect(() => {
-    if (reduced) {
-      return;
-    }
-
-    const intervalId = setInterval(() => {
-      setTitleIndex((current) => (current + 1) % titles.length);
-    }, 2800);
-
-    return () => clearInterval(intervalId);
-  }, [reduced]);
-
-  const mouseX = useMotionValue(-1000);
-  const mouseY = useMotionValue(-1000);
-  const smoothX = useSpring(mouseX, { stiffness: 130, damping: 22, mass: 0.6 });
-  const smoothY = useSpring(mouseY, { stiffness: 130, damping: 22, mass: 0.6 });
-
-  const onSectionMove = useCallback(
-    (event: ReactMouseEvent<HTMLElement>) => {
-      if (!hasHover || reduced || !sectionRef.current) {
-        return;
-      }
-
-      const rect = sectionRef.current.getBoundingClientRect();
-      mouseX.set(event.clientX - rect.left);
-      mouseY.set(event.clientY - rect.top);
-    },
-    [hasHover, mouseX, mouseY, reduced]
-  );
-
-  const spotlight = useMotionTemplate`radial-gradient(420px circle at ${smoothX}px ${smoothY}px, rgba(200,255,0,0.12), transparent 70%)`;
-  const scanline = useMotionTemplate`linear-gradient(180deg, transparent 0%, rgba(200,255,0,0.08) 48%, rgba(200,255,0,0.18) 50%, transparent 54%)`;
-
-  const px = useTransform(smoothX, (value) => {
-    const width = sectionRef.current?.clientWidth ?? 1;
-    return (value / width - 0.5) * 34;
-  });
-  const py = useTransform(smoothY, (value) => {
-    const height = sectionRef.current?.clientHeight ?? 1;
-    return (value / height - 0.5) * 28;
-  });
-  const px2 = useTransform(px, (value) => -value * 0.6);
-  const py2 = useTransform(py, (value) => -value * 0.6);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -364,7 +247,6 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="hero"
-      onMouseMove={onSectionMove}
       className="relative min-h-screen w-full overflow-hidden bg-surface"
     >
       <div
@@ -376,56 +258,28 @@ export default function Hero() {
         }}
       />
 
-      <motion.div
+      <div
         aria-hidden
         className="absolute inset-x-[-20%] top-[-14rem] h-[28rem] bg-[radial-gradient(circle_at_center,rgba(200,255,0,0.18),transparent_58%)] blur-3xl"
-        animate={bgActive ? { rotate: [0, 8, -4, 0], scale: [1, 1.08, 1] } : undefined}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div
+      <div
         aria-hidden
         className="absolute left-[-12rem] top-1/4 h-80 w-80 rounded-full border border-accent/10"
-        animate={bgActive ? { y: [0, -26, 0], rotate: [0, 12, 0] } : undefined}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div
+      <div
         aria-hidden
         className="absolute right-[-10rem] bottom-20 h-72 w-72 rounded-full border border-accent/10"
-        animate={bgActive ? { y: [0, 22, 0], rotate: [0, -10, 0] } : undefined}
-        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
 
-      {hasHover && !reduced && (
-        <motion.div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none z-[1]"
-          style={{ background: spotlight }}
-        />
-      )}
-
-      <motion.div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none opacity-70"
-        style={{ backgroundImage: scanline, backgroundSize: "100% 140px" }}
-        animate={bgActive ? { backgroundPositionY: ["0px", "140px"] } : undefined}
-        transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-      />
-
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={hasHover && !reduced ? { x: px, y: py } : undefined}
-      >
+      <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute -left-24 top-10 h-[34rem] w-[34rem] rounded-full blur-3xl"
           style={{
             background: "radial-gradient(circle, var(--bloom) 0%, transparent 72%)",
           }}
         />
-      </motion.div>
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={hasHover && !reduced ? { x: px2, y: py2 } : undefined}
-      >
+      </div>
+      <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute bottom-0 right-0 h-[38rem] w-[38rem] rounded-full blur-3xl"
           style={{
@@ -433,7 +287,7 @@ export default function Hero() {
               "radial-gradient(circle, var(--bloom-soft) 0%, transparent 72%)",
           }}
         />
-      </motion.div>
+      </div>
 
       <CornerBracket className="left-6 top-24" position="tl" delay={0.2} />
       <CornerBracket className="right-6 top-24" position="tr" delay={0.3} />
@@ -568,7 +422,7 @@ export default function Hero() {
           >
             <span className="text-sm text-accent-fg/70 font-dm">{">"}</span>
             <span className="font-syne text-xl font-semibold tabular-nums text-fg2 md:text-2xl">
-              <Scramble text={titles[titleIndex]} />
+              {titles[0]}
             </span>
             <span className="inline-block h-6 w-0.5 bg-accent animate-[blink_1s_step-end_infinite]" />
           </motion.div>
